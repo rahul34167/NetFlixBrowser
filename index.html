@@ -1,0 +1,150 @@
+
+<html lang="en" ng-app="NetFlixSearch">
+<head>
+  <meta charset="utf-8">
+  <title>NetFlix Movie Tracker</title>
+    <link rel='stylesheet' href='public/stylesheets/Netflix.css' />
+     <link rel="stylesheet" href="public/stylesheets/bootstrap.min.css">
+     <link rel="stylesheet" href="public/stylesheets/animate.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<script src="public/javascripts/Netflix.js"></script>
+
+</head>
+<body>
+
+
+	<div ng-controller="SearchNetflix">
+
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#"><b>Netflix</b> <span class="span-style">Browser</span></a>
+      </div>
+    </div>
+  </nav>
+		<div id="search-container" class="row">
+			<div class="col-lg-3">
+
+				<!-- this form will trigger the getResults function in the javascript controller on submit -->
+				<form class="input-group" ng-submit="fetchFromNetflix()" >
+					<!-- this text input is binded to a variable in the javascript controller -->
+				  <input type="text" class="form-control" placeholder="Search For Movies and Shows" ng-model="searchQuery">
+					<span class="input-group-btn">
+		        <button class="btn btn-default" type="submit">Search</button>
+		      </span>
+
+				</form>
+   		</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+
+		    	<div id="title-container">
+					<div ng-if="movietitle!=='False'">
+					  <ul class="rel-results">
+					    <li ng-repeat="movie in titleResult">
+					    	<div class="resultContainer">
+					    	 <img  ng-src="{{movie.poster}} " />
+					    	
+							   <p class="outer-p">
+							   	          <div class="inner-p">
+								            <span class="label label-primary">Title :</span> 
+								         <span ng-click="updateVar($event)"> {{ movie.show_title }} </span>
+								          </div>
+								          <div class="inner-p">
+								            <span class="label label-primary">Directors :</span> 
+								            <span class="spanPointer" ng-click="updateVar($event)"> {{ movie.director }} 
+								            </span>
+								          </div>
+								          <div class="inner-p">
+								            	<span class="label label-primary">Actors :</span>
+								            <span ng-bind="convertToArray(movie.show_cast,',')" ></span> 
+								                <span class="spanPointer" ng-click="updateVar($event); turnGreen($event) " ng-repeat="actor in actors">
+            {{actor}} {{$last ? '' : ($index==actors.length-2) ? ' and ' : ', '}}
+        </span>
+								          </div>
+        							 </p>
+							</div>
+					    </li>
+					  </ul>
+					</div>
+
+		    	</div>
+               <div id="director-container">
+
+					<div ng-if="director!=='False'">
+				
+
+					  <ul class="rel-results">
+					    <li ng-repeat="movie in directorResult">
+					    	<div class="resultContainer">
+					     <img  ng-src="{{movie.poster}} " />
+							  <p class="outer-p">
+							  	          <div class="inner-p">
+								            <span class="label label-primary">Title :</span>
+								             {{ movie.show_title }}
+								          </div>
+								          <div class="inner-p">
+								            <span class="label label-primary">Directors :</span> 
+								            <span class="spanPointer" ng-click="updateVar($event)"> {{ movie.director }}
+								            </span>
+								          </div>
+								          <div class="inner-p">
+								          	<span class="label label-primary">Actors :</span>
+								            <span ng-bind="convertToArray(movie.show_cast,',')" ></span> 
+								                <span class="spanPointer" ng-click="updateVar($event); turnGreen($event)" ng-repeat="actor in actors">
+            {{actor}} {{$last ? '' : ($index==actors.length-2) ? ' and ' : ', '}}
+        </span>
+
+								          </div>
+        							 </p>
+							</div>
+					    </li>
+					  </ul>
+					</div>
+
+		    	</div>
+
+		    	 <div id="actor-container">
+
+					<div ng-if="actor!=='False'">
+					  <ul class="rel-results">
+					    <li ng-repeat="movie in actorResult">
+					    	<div class="resultContainer">
+					     <img ng-src="{{movie.poster}} " />
+							          <p class="outer-p">
+							          	  <div class="inner-p">
+								            <span class="label label-primary">Title :</span> {{ movie.show_title }}
+								          </div>
+								          <div class="inner-p">
+								            <span class="label label-primary">Directors :</span> 
+								             <span class="spanPointer" ng-click="updateVar($event)"> {{ movie.director }}
+								             </span>
+								          </div>
+								          <div class="inner-p">
+								            	<span class="label label-primary">Actors :</span>
+								            <span ng-bind="convertToArray(movie.show_cast,',')" ></span> 
+								                <span class="spanPointer" ng-click="updateVar($event); turnGreen($event) " ng-repeat="actor in actors">
+            {{actor}} {{$last ? '' : ($index==actors.length-2) ? ' and ' : ', '}}
+        </span>
+								          </div>
+        							 </p>
+							</div>
+					    </li>
+					  </ul>
+					</div>
+
+		    	</div>
+							<div ng-if="movietitle ==='False' &&  title==='False' &&actor==='False' ">
+										        No results found.
+										      </div>
+
+		  </div>
+  	</div>
+
+
+	</div>
+
+</body>
+</html>
